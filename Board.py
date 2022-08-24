@@ -91,9 +91,6 @@ class Board():
             print(self)
 
         return self.score()
-        # Todo calc the sum to the nune zero side player
-        # rais the winner player
-        print('end')
 
     def __str__(self):
         # player num : {self.player_turn}
