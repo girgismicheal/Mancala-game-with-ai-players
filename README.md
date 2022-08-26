@@ -345,3 +345,78 @@ in python, the following data is saved on each game play:
 (Board – Which player turn – Game mode – difficulty)
 By loading this data, the game will be loaded Later on “in case
 of sudden termination for example”.
+
+
+
+
+## Node Class
+The minmax algorithm is implemented as a function that takes 5th and last argument is a Boolean value to say if the player who is playing right
+now is a maximizer or a minimizer.
+Inside the function there is a condition to check if the depth is zero (so we have
+reached Maximum depth) or if the node is terminal, so we are at the leaf nodes,
+then we return the node value.
+```Python
+def return_value(ele):
+    return ele.value
+    
+def AlphaBetaAlg(start_time,node,depth=infinity, alpha=-infinity, beta=infinity, isMaximizing=True,threshold=30):
+    if depth == 0 or node.isterminal(isMaximizing):  # base condition
+        return node.value, node.pos
+
+    best_pos = None
+
+    if isMaximizing:  # maxmizer player
+        value = -infinity
+        Choices = sorted(node.get_children(), key=return_value, reverse=True)
+        for i in Choices:
+            other = AlphaBetaAlg(start_time,i, depth - 1, alpha, beta, isMaximizing=i.is_repeated)
+            if value < other[0]:
+                value = other[0]
+                best_pos = i.pos
+            if value > alpha:
+                alpha = value
+            if alpha >= beta:  # cutoff
+                break
+            if time.time()-start_time>threshold+10:
+                return value,best_pos
+        return value, best_pos
+
+    else:  # minimizer player
+        value = infinity
+        Choices = sorted(node.get_opponent_children(), key=return_value)
+        for i in Choices:
+            other = AlphaBetaAlg(start_time,i, depth - 1, alpha, beta, isMaximizing=not i.is_repeated)
+            if value > other[0]:
+                value = other[0]
+                best_pos = i.pos
+            if value < beta:
+                beta = value
+            if alpha >= beta:  # cutoff
+                break
+
+            if time.time()-start_time>threshold+10:
+                return value,best_pos            
+        return value, best_pos
+```
+- Then we check to see if the player is a maximizer, if so , we define alpha with a
+value of negative infinity, and an empty list to put in it the best sorting of the
+children in case of a maximizer player, then we loop over children , checking to
+see the max value returned from those children using recursion, and put it in the
+alpha value if this value is greater than the old alpha, otherwise it remains the
+same, then there’s a condition to check if the value of alpha is greater than or
+equal beta, then cut off occurs.
+- This function at the end returns the value, which is the alpha value since it is a
+maximizer, and also returns a list sorted in descending order to place the largest
+value on the left to get the best pruning which is a bonus feature.
+Then we check to see if the player is a minimizer, if so, we define beta with a
+value of positive infinity, and an empty list to put in it the best sorting of the
+children in case of a minimizer player, the we loop over children, check to see
+the minimum value returned from those children using recursion, and put it in
+the beta value if this value is less than the old beta, otherwise it remains the
+same, then there’s a condition to check if the value of alpha is greater than or
+equal beta, then cut off occurs.
+- This function at the end returns the value, which is the beta value since it is a
+minimizer, and also returns a list sorted in ascending order to place the smallest
+value on the left to get the best pruning which is also a bonus feature.
+
+
