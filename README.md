@@ -43,7 +43,6 @@ Pruning written from scratch.
 8. Added iterative deepening variant of minmax algorithm.
 9. MinMax optimization using sorting of children.
 
-
 # Class Diagram of the complete design of our game
 ![Class Diagram](Image/Class_Diagram.png)
 
@@ -62,8 +61,6 @@ Mancala Game With Ai Players
 |── README.md
 └── Images
 ```  
-
-
 ## Board Class:
 - The Mancala Board is represented by a list of 14 elements
 The first 7 elements are for player 1 (6 holes for stones + 1 for mancala
@@ -110,10 +107,6 @@ before and calculating the final score in each mancala.
 - Play_game function: just applying the logic explained in all the past
 functions, Player move then XORING the player turn as the switch play
 (player 0 and 1) Then return the final score.
-
-
-
-
 ## Players Class
 When instantiating an object of player class, it automatically given an id to mark him.
 ```Python
@@ -175,8 +168,6 @@ described later”.
 The function will print the possible winning value.
 Return: position to be played by AI agent.
 
-
-
 ## AI_player Class
 **THE_players function:** Based on the “Game_mode” & “difficulty” input variables
 from user, Players are created with their id.
@@ -207,10 +198,6 @@ def THE_players(Game_mode,difficulty=3):
         Player_1, Player_2 = AI_player(0, difficulty), AI_player(1,difficulty)
     return Player_1, Player_2
 ```
-
-
-
-
 
 ## Game Class
 The main Class which integrates all the past classes and functions.
@@ -347,9 +334,7 @@ By loading this data, the game will be loaded Later on “in case
 of sudden termination for example”.
 
 
-
-
-## Node Class
+## AlphaBetaAlg Class
 The minmax algorithm is implemented as a function that takes 5th and last argument is a Boolean value to say if the player who is playing right
 now is a maximizer or a minimizer.
 Inside the function there is a condition to check if the depth is zero (so we have
@@ -418,7 +403,6 @@ equal beta, then cut off occurs.
 - This function at the end returns the value, which is the beta value since it is a
 minimizer, and also returns a list sorted in ascending order to place the smallest
 value on the left to get the best pruning which is also a bonus feature.
-
 
 
 
@@ -491,7 +475,6 @@ by the player of the node
 be made by the opponent player
 - isterminal: returns a flag determining whether this is the final move of the game or
 not, depending on the player parameter.
-
 
 
 
