@@ -176,3 +176,34 @@ The function will print the possible winning value.
 Return: position to be played by AI agent.
 
 
+
+## AI_player Class
+**THE_players function:** Based on the “Game_mode” & “difficulty” input variables
+from user, Players are created with their id.
+Also, for AI agent, the difficulty input variable will
+determine for which depth it will iterate throw the Tree.
+
+```Python
+def get_difficulty(d):
+    return d*2+1
+
+def THE_players(Game_mode,difficulty=3):
+    difficulty = get_difficulty(difficulty)
+    player.id=0
+    if Game_mode == 1:
+        print('Human VS Human Mode')
+        Player_1, Player_2 = Human_player(0), Human_player(1)
+
+    elif Game_mode == 2:
+        print('Human VS Ai Mode')
+        Player_1, Player_2 = Human_player(0), AI_player(1,difficulty)
+
+    elif Game_mode == 3:
+        print('Ai VS Human Mode')
+        Player_1, Player_2 = AI_player(0,difficulty), Human_player(1)
+
+    elif Game_mode == 4:
+        print('Ai VS Ai Mode')
+        Player_1, Player_2 = AI_player(0, difficulty), AI_player(1,difficulty)
+    return Player_1, Player_2
+```
