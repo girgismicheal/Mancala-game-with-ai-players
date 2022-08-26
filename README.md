@@ -46,3 +46,24 @@ Pruning written from scratch.
 
 # Class Diagram of the complete design of our game
 ![Class Diagram](Image/Class_Diagram.png)
+
+
+# Class Diagram of the complete design of our game
+![Class Diagram](Image/Class_Diagram.png)
+
+# Detailed Description of Classes & Functions
+**File Architecture**
+```
+Mancala Game With Ai Players
+|
+|── Board.py
+|── Players.py
+|── Game.py
+|── Node.py
+|── AI_algorithms.py
+|── Ml Algorithms.py
+|── Choice_player.py
+|── README.md
+└── Images
+```  
+
