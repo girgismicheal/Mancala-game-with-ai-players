@@ -42,3 +42,7 @@ Pruning written from scratch.
 7. Added timer inside the mini-max algorithm.
 8. Added iterative deepening variant of minmax algorithm.
 9. MinMax optimization using sorting of children.
+
+
+# Class Diagram of the complete design of our game
+![Class Diagram](Image/Class_Diagram.png)
