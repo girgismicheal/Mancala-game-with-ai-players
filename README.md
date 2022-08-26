@@ -492,3 +492,28 @@ be made by the opponent player
 - isterminal: returns a flag determining whether this is the final move of the game or
 not, depending on the player parameter.
 
+
+
+
+## User Guide
+
+1. Make sure you have python installed.
+2. Extract the zip file downloaded from the repo.
+3. Open a terminal in the folder where you extracted the
+project, and write “python Game.py”.
+4. In the terminal, First enter 1 or 2 to select new game or load
+game.
+5. Choose between with Or without stealing modes.
+6. If new game is chosen, Enter 1,2,3 or 4 to select game mode.
+7. If you chose any mode other than Human vs Human, Enter
+1,2 or 3 for difficulty setting.
+8. Enter your choice position from valid positions.
+9. If your choice is invalid, a list of possible choices will appear.
+   - Note: To exit a game before it is finished, simply close the
+   script, or press Ctrl-C.
+10. In case you left a game before it is done, you can simply
+load the last state by choosing load game after you restart
+the script.
+11. When a game is done, the winner will be displayed, and
+the script will ask if you want to play again, enter y to play
+again, or any key to exit.
