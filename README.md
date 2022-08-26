@@ -207,3 +207,141 @@ def THE_players(Game_mode,difficulty=3):
         Player_1, Player_2 = AI_player(0, difficulty), AI_player(1,difficulty)
     return Player_1, Player_2
 ```
+
+
+
+
+
+## Game Class
+The main Class which integrates all the past classes and functions.
+```Python
+from Board import Board
+from choice_player import THE_players
+import pickle
+
+
+class Game():
+
+    def __init__(self):  # two players and board1
+
+        self.player_turn = 0
+        self.player1 = None
+        self.player2 = None
+        self.Curr_Player = None
+        self.board = Board()
+        self.saved_game=[]
+
+    def Run(self):
+        start_or_load = int(input('''
+            New Game  ---> Press 1
+            Load Game ---> Press 2
+        
+        '''))
+        while start_or_load not in [1,2]:
+            start_or_load = int(input('''
+            Please Enter a Valid choice!
+
+            New Game  ---> Press 1
+            Load Game ---> Press 2
+        '''))
+
+        if (start_or_load==1):
+            stealing = int(input(
+                '''
+                1-with Stealing
+                2-without Stealing
+                '''
+            ))
+            Game_mode = int(input('''
+                    1- Human Vs Human
+                    2- Human Vs AI
+                    3- AI Vs Human
+                    4- AI VS AI
+                    Your choice ? :
+                    '''))
+            if Game_mode>1:
+                difficulty=int(input('''
+                 1-Easy Mode
+                 2-Moderate Mode
+                 3-Hard Mode
+                '''))
+            else:
+                difficulty=None
+            if Game_mode>1:
+                self.player1, self.player2 = THE_players(Game_mode,difficulty)
+            else:
+                self.player1, self.player2 = THE_players(Game_mode)
+            self.Curr_Player = self.player1
+            while not self.board.GameOver():
+                print(f"player : {self.player_turn+1}")
+                print(self.board)
+                current_state = (self.board, self.player_turn,Game_mode,difficulty, stealing)
+                with open('saved_gamed', 'wb') as file:
+                    pickle.dump(current_state, file)
+                file.close()
+                nextMove = self.Curr_Player.choice(self.board)
+                turn_end = self.board.Move(nextMove, self.player_turn, stealing=(stealing==1))
+                # change Btween players
+                if turn_end:
+                    self.player_turn ^= 1
+                    if self.player_turn == 0:
+                        self.Curr_Player = self.player1
+                    else:
+                        self.Curr_Player = self.player2
+            print(self.board)
+            print(f'Player {self.board.who_win()+1} wins !!!!')
+            print('end')
+        elif(start_or_load==2):
+            with open('saved_gamed', 'rb') as file:
+                tuples = pickle.load(file)
+            file.close()
+            self.board,self.player_turn,Game_mode,difficulty, stealing=tuples
+            if difficulty is not None:
+                self.player1, self.player2 = THE_players(Game_mode,difficulty)
+            else:
+                self.player1, self.player2 = THE_players(Game_mode)
+            if(tuples[1]==0):
+                self.Curr_Player = self.player1
+            else:
+                self.Curr_Player = self.player2
+            while not self.board.GameOver():
+                print(f"player : {self.player_turn+1}")
+                print(self.board)
+                current_state = (self.board, self.player_turn,Game_mode,difficulty, stealing)
+                with open('saved_gamed', 'wb') as file:
+                    pickle.dump(current_state, file)
+                file.close()
+                nextMove = self.Curr_Player.choice(self.board)
+                turn_end = self.board.Move(nextMove, self.player_turn, stealing=(stealing==1))
+                # Change Between players
+                if turn_end:
+                    self.player_turn ^= 1
+                    if self.player_turn == 0:
+                        self.Curr_Player = self.player1
+                    else:
+                        self.Curr_Player = self.player2
+            print(self.board)
+            print(f'Player {self.board.who_win()+1} wins !!!!')
+            print('end')
+
+```
+**Run function:**
+- As shown in our code, the user will choose whether to start a
+new game or load the last un-finished game
+(A bonus Part).
+- If load game is selected, the game will work automatically
+without any other questions.
+
+- If new game is selected, the user will be asked about which
+mode of playing he wants to play.
+- in case choosing any playing mode having AI model, the user
+will be asked about the difficulty level required.
+- While not the game is over “periodically checks the game
+stopping condition stated before” the players will play
+alternatively using the utility functions explained in all the past
+modules.
+- Using “Pickle” library for saving and loading Custom data types
+in python, the following data is saved on each game play:
+(Board – Which player turn – Game mode – difficulty)
+By loading this data, the game will be loaded Later on “in case
+of sudden termination for example”.
